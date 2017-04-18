@@ -1,0 +1,841 @@
+<html lang="en"><head>
+    <title>Code coverage report for node-npmtest-omelette/node_modules/omelette/src/omelette.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-omelette">npmtest-omelette (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-omelette/node_modules/omelette/src/omelette.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">25% <small>(34 / 136)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">2.78% <small>(1 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">13.33% <small>(4 / 30)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">20.31% <small>(26 / 128)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../../index.html">All files</a> » <a href="index.html">node-npmtest-omelette/node_modules/omelette/src/</a> » omelette.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tbody><tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Generated by CoffeeScript 1.12.3
+&nbsp;
+/*
+ * Omelette Simple Auto Completion for Node
+ */
+&nbsp;
+(function() {
+  var EventEmitter, Omelette, fs, os, path,
+    extend = function(child, parent) { for (var key in parent) { <span class="missing-if-branch" title="else path not taken">E</span>if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    slice = [].slice;
+&nbsp;
+  EventEmitter = require("events").EventEmitter;
+&nbsp;
+  path = require("path");
+&nbsp;
+  fs = require("fs");
+&nbsp;
+  os = require("os");
+&nbsp;
+  Omelette = (function(superClass) {
+    var log;
+&nbsp;
+    extend(Omelette, superClass);
+&nbsp;
+    log = console.log;
+&nbsp;
+<span class="fstat-no" title="function not covered">    function Omelette() {</span>
+<span class="cstat-no" title="statement not covered">      var isZsh, ref;</span>
+<span class="cstat-no" title="statement not covered">      this.compgen = process.argv.indexOf("--compgen");</span>
+<span class="cstat-no" title="statement not covered">      this.install = process.argv.indexOf("--completion") &gt; -1;</span>
+<span class="cstat-no" title="statement not covered">      this.installFish = process.argv.indexOf("--completion-fish") &gt; -1;</span>
+<span class="cstat-no" title="statement not covered">      isZsh = process.argv.indexOf("--compzsh") &gt; -1;</span>
+<span class="cstat-no" title="statement not covered">      this.isDebug = process.argv.indexOf("--debug") &gt; -1;</span>
+<span class="cstat-no" title="statement not covered">      this.fragment = parseInt(process.argv[this.compgen + 1]) - (isZsh ? 1 : 0);</span>
+<span class="cstat-no" title="statement not covered">      this.word = process.argv[this.compgen + 2];</span>
+<span class="cstat-no" title="statement not covered">      this.line = process.argv[this.compgen + 3];</span>
+<span class="cstat-no" title="statement not covered">      ref = process.env, this.HOME = ref.HOME, this.SHELL = ref.SHELL;</span>
+    }
+&nbsp;
+    Omelette.prototype.setProgram = <span class="fstat-no" title="function not covered">function(programs) {</span>
+<span class="cstat-no" title="statement not covered">      programs = programs.split('|');</span>
+<span class="cstat-no" title="statement not covered">      this.program = programs[0];</span>
+<span class="cstat-no" title="statement not covered">      return this.programs = programs.map(<span class="fstat-no" title="function not covered">function(program) {</span></span>
+<span class="cstat-no" title="statement not covered">        return program.replace(/[^A-Za-z0-9\.\_\-]/g, '');</span>
+      });
+    };
+&nbsp;
+    Omelette.prototype.setFragments = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      var fragments1;</span>
+<span class="cstat-no" title="statement not covered">      fragments1 = 1 &lt;= arguments.length ? slice.call(arguments, 0) : [];</span>
+<span class="cstat-no" title="statement not covered">      this.fragments = fragments1;</span>
+    };
+&nbsp;
+    Omelette.prototype.generate = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      this.emit("complete", this.fragments[this.fragment - 1], this.word, this.line);</span>
+<span class="cstat-no" title="statement not covered">      this.emit(this.fragments[this.fragment - 1], this.word, this.line);</span>
+<span class="cstat-no" title="statement not covered">      this.emit("$" + this.fragment, this.word, this.line);</span>
+<span class="cstat-no" title="statement not covered">      return process.exit();</span>
+    };
+&nbsp;
+    Omelette.prototype.reply = <span class="fstat-no" title="function not covered">function(words) {</span>
+<span class="cstat-no" title="statement not covered">      if (words == null) {</span>
+<span class="cstat-no" title="statement not covered">        words = [];</span>
+      }
+<span class="cstat-no" title="statement not covered">      console.log(words.join("\n"));</span>
+<span class="cstat-no" title="statement not covered">      return process.exit();</span>
+    };
+&nbsp;
+    Omelette.prototype.generateCompletionCode = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      var completions;</span>
+<span class="cstat-no" title="statement not covered">      completions = this.programs.map((<span class="fstat-no" title="function not covered">function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered">        return <span class="fstat-no" title="function not covered">function(program) {</span></span>
+<span class="cstat-no" title="statement not covered">          var completion;</span>
+<span class="cstat-no" title="statement not covered">          completion = "_" + program + "_complette";</span>
+<span class="cstat-no" title="statement not covered">          return "### " + program + " completion - begin. generated by omelette.js ###\nif type compdef &amp;&gt;/dev/null; then\n  " + completion + "() {\n    compadd -- `" + _this.program + " --compzsh --compgen \"${CURRENT}\" \"${words[CURRENT-1]}\" \"${BUFFER}\"`\n  }\n  compdef " + completion + " " + program + "\nelif type complete &amp;&gt;/dev/null; then\n  " + completion + "() {\n    COMPREPLY=( $(compgen -W '$(" + _this.program + " --compbash --compgen \"${COMP_CWORD}\" \"${COMP_WORDS[COMP_CWORD-1]}\" \"${COMP_LINE}\")' -- \"${COMP_WORDS[COMP_CWORD]}\") )\n  }\n  complete -F " + completion + " " + program + "\nfi\n### " + program + " completion - end ###";</span>
+        };
+      })(this));
+<span class="cstat-no" title="statement not covered">      if (this.isDebug) {</span>
+<span class="cstat-no" title="statement not covered">        completions.push(this.generateTestAliases());</span>
+      }
+<span class="cstat-no" title="statement not covered">      return completions.join(os.EOL);</span>
+    };
+&nbsp;
+    Omelette.prototype.generateCompletionCodeFish = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      var completions;</span>
+<span class="cstat-no" title="statement not covered">      completions = this.programs.map((<span class="fstat-no" title="function not covered">function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered">        return <span class="fstat-no" title="function not covered">function(program) {</span></span>
+<span class="cstat-no" title="statement not covered">          var completion;</span>
+<span class="cstat-no" title="statement not covered">          completion = "_" + program + "_complette";</span>
+<span class="cstat-no" title="statement not covered">          return "### " + program + " completion - begin. generated by omelette.js ###\nfunction " + completion + "\n  " + _this.program + " --compfish --compgen (count (commandline -poc)) (commandline -pt) (commandline -pb)\nend\ncomplete -f -c " + program + " -a '(" + completion + ")'\n### " + program + " completion - end ###";</span>
+        };
+      })(this));
+<span class="cstat-no" title="statement not covered">      if (this.isDebug) {</span>
+<span class="cstat-no" title="statement not covered">        completions.push(this.generateTestAliases());</span>
+      }
+<span class="cstat-no" title="statement not covered">      return completions.join(os.EOL);</span>
+    };
+&nbsp;
+    Omelette.prototype.generateTestAliases = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      var debugAliases, debugUnaliases, fullPath;</span>
+<span class="cstat-no" title="statement not covered">      fullPath = path.join(process.cwd(), this.program);</span>
+<span class="cstat-no" title="statement not covered">      debugAliases = this.programs.map(<span class="fstat-no" title="function not covered">function(program) {</span></span>
+<span class="cstat-no" title="statement not covered">        return "  alias " + program + "=" + fullPath;</span>
+      }).join(os.EOL);
+<span class="cstat-no" title="statement not covered">      debugUnaliases = this.programs.map(<span class="fstat-no" title="function not covered">function(program) {</span></span>
+<span class="cstat-no" title="statement not covered">        return "  unalias " + program;</span>
+      }).join(os.EOL);
+<span class="cstat-no" title="statement not covered">      return "### test method ###\nomelette-debug-" + this.program + "() {\n" + debugAliases + "\n}\nomelette-nodebug-" + this.program + "() {\n" + debugUnaliases + "\n}\n### tests ###";</span>
+    };
+&nbsp;
+    Omelette.prototype.checkInstall = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      if (this.install) {</span>
+<span class="cstat-no" title="statement not covered">        log(this.generateCompletionCode());</span>
+<span class="cstat-no" title="statement not covered">        process.exit();</span>
+      }
+<span class="cstat-no" title="statement not covered">      if (this.installFish) {</span>
+<span class="cstat-no" title="statement not covered">        log(this.generateCompletionCodeFish());</span>
+<span class="cstat-no" title="statement not covered">        return process.exit();</span>
+      }
+    };
+&nbsp;
+    Omelette.prototype.getActiveShell = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      var SHELL;</span>
+<span class="cstat-no" title="statement not covered">      SHELL = process.env.SHELL;</span>
+<span class="cstat-no" title="statement not covered">      if (SHELL.match(/bash/)) {</span>
+<span class="cstat-no" title="statement not covered">        return 'bash';</span>
+      } else <span class="cstat-no" title="statement not covered">if (SHELL.match(/zsh/)) {</span>
+<span class="cstat-no" title="statement not covered">        return 'zsh';</span>
+      } else <span class="cstat-no" title="statement not covered">if (SHELL.match(/fish/)) {</span>
+<span class="cstat-no" title="statement not covered">        return 'fish';</span>
+      }
+    };
+&nbsp;
+    Omelette.prototype.getDefaultShellInitFile = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      var fileAt, fileAtHome;</span>
+<span class="cstat-no" title="statement not covered">      fileAt = <span class="fstat-no" title="function not covered">function(root) {</span></span>
+<span class="cstat-no" title="statement not covered">        return <span class="fstat-no" title="function not covered">function(file) {</span></span>
+<span class="cstat-no" title="statement not covered">          return path.join(root, file);</span>
+        };
+      };
+<span class="cstat-no" title="statement not covered">      fileAtHome = fileAt(this.HOME);</span>
+<span class="cstat-no" title="statement not covered">      switch (this.shell = this.getActiveShell()) {</span>
+        case 'bash':
+<span class="cstat-no" title="statement not covered">          return fileAtHome('.bash_profile');</span>
+        case 'zsh':
+<span class="cstat-no" title="statement not covered">          return fileAtHome('.zshrc');</span>
+        case 'fish':
+<span class="cstat-no" title="statement not covered">          return fileAtHome('.config/fish/config.fish');</span>
+      }
+    };
+&nbsp;
+    Omelette.prototype.setupShellInitFile = <span class="fstat-no" title="function not covered">function(initFile) {</span>
+<span class="cstat-no" title="statement not covered">      var completionPath, programFolder, template;</span>
+<span class="cstat-no" title="statement not covered">      if (initFile == null) {</span>
+<span class="cstat-no" title="statement not covered">        initFile = this.getDefaultShellInitFile();</span>
+      }
+<span class="cstat-no" title="statement not covered">      template = (<span class="fstat-no" title="function not covered">function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered">        return <span class="fstat-no" title="function not covered">function(command) {</span></span>
+<span class="cstat-no" title="statement not covered">          return "\n# begin " + _this.program + " completion\n" + command + "\n# end " + _this.program + " completion\n";</span>
+        };
+      })(this);
+<span class="cstat-no" title="statement not covered">      switch (this.shell) {</span>
+        case 'bash':
+<span class="cstat-no" title="statement not covered">          programFolder = path.join(this.HOME, "." + this.program);</span>
+<span class="cstat-no" title="statement not covered">          completionPath = path.join(programFolder, 'completion.sh');</span>
+<span class="cstat-no" title="statement not covered">          if (!fs.existsSync(programFolder)) {</span>
+<span class="cstat-no" title="statement not covered">            fs.mkdirSync(programFolder);</span>
+          }
+<span class="cstat-no" title="statement not covered">          fs.writeFileSync(completionPath, this.generateCompletionCode());</span>
+<span class="cstat-no" title="statement not covered">          fs.appendFileSync(initFile, template("source " + completionPath));</span>
+<span class="cstat-no" title="statement not covered">          break;</span>
+        case 'zsh':
+<span class="cstat-no" title="statement not covered">          fs.appendFileSync(initFile, template(". &lt;(" + this.program + " --completion)"));</span>
+<span class="cstat-no" title="statement not covered">          break;</span>
+        case 'fish':
+<span class="cstat-no" title="statement not covered">          fs.appendFileSync(initFile, template(this.program + " --completion-fish | source"));</span>
+      }
+<span class="cstat-no" title="statement not covered">      return process.exit();</span>
+    };
+&nbsp;
+    Omelette.prototype.init = <span class="fstat-no" title="function not covered">function() {</span>
+<span class="cstat-no" title="statement not covered">      if (this.compgen &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered">        return this.generate();</span>
+      }
+    };
+&nbsp;
+    return Omelette;
+&nbsp;
+  })(EventEmitter);
+&nbsp;
+  module.exports = <span class="fstat-no" title="function not covered">function(template) {</span>
+<span class="cstat-no" title="statement not covered">    var _omelette, fragments, program, ref;</span>
+<span class="cstat-no" title="statement not covered">    ref = template.split(/\s+/), program = ref[0], fragments = 2 &lt;= ref.length ? slice.call(ref, 1) : [];</span>
+<span class="cstat-no" title="statement not covered">    fragments = fragments.map(<span class="fstat-no" title="function not covered">function(fragment) {</span></span>
+<span class="cstat-no" title="statement not covered">      return fragment.replace(/^\&lt;+|\&gt;+$/g, '');</span>
+    });
+<span class="cstat-no" title="statement not covered">    _omelette = new Omelette;</span>
+<span class="cstat-no" title="statement not covered">    _omelette.setProgram(program);</span>
+<span class="cstat-no" title="statement not covered">    _omelette.setFragments.apply(_omelette, fragments);</span>
+<span class="cstat-no" title="statement not covered">    _omelette.checkInstall();</span>
+<span class="cstat-no" title="statement not covered">    return _omelette;</span>
+  };
+&nbsp;
+}).call(this);
+&nbsp;
+&nbsp;</pre></td></tr>
+</tbody></table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Tue Apr 18 2017 08:28:05 GMT+0000 (UTC)</div>
+</div>
+
+
+</body></html>
